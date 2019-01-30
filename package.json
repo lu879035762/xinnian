@@ -1,0 +1,23 @@
+{
+  "name": "lupengfei",
+  "version": "1.0.0",
+  "description": "Git is a version control system.\r Git is free software.\r 666\r Git is a version control system.\r Git is free software.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lu879035762/xinnian.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lu879035762/xinnian/issues"
+  },
+  "homepage": "https://github.com/lu879035762/xinnian#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongodb": "^3.1.13"
+  }
+}

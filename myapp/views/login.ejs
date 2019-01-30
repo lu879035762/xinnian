@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <script src="/javascripts/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    
+  </head>
+  <body>
+  <div class="wrapper">
+
+	<div class="container">
+		<h1>Welcome</h1>
+		<div class="form">
+			<input id="inputUser" type="text" placeholder="用户名">
+			<input id="inputPassword3" type="password" placeholder="密码">
+			<button type="submit" id="login">登录</button>
+		</div>
+	</div>
+	
+	<ul class="bg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	
+</div>
+  </body>
+  <script type="text/javascript">
+  	$('#login').click(function(){
+  		var password=md5($('#inputPassword3').val())
+  		$.ajax({
+  			type:"post",
+  			url:"/users/login",
+  			data:{username:$('#inputUser').val(),pass:password},
+  			success:function(data){
+//				console.log(data)
+				if(data==1){
+					alert('登陆成功，跳转首页')
+					location.href='/'
+				}else{
+					alert('用户名密码不符合,请重新登陆')
+					location.href='/login'
+				}
+  			}
+  		});
+  	})
+  	
+  	
+  	
+  </script>
+</html>
