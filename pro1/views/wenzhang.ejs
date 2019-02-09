@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title></title>
+		
+		
+		<script type="text/javascript" src="/javascripts/index.js"></script>
+		<link rel="stylesheet" type="text/css" href="/stylesheets/common.css" />
+		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+		<script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+		
+		
+		
+		
+		<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+		<script src="/javascripts/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+		<script src="/javascripts/xheditor/xheditor-1.2.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="/stylesheets/wenzhang.css" />
+		<script src="/javascripts/xheditor/xheditor_lang/zh-cn.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		
+		
+		<div class="topbar-wrap white">
+			<div class="topbar-inner clearfix">
+				<div class="topbar-logo-wrap clearfix">
+					<h1 class="topbar-logo none"><a href="/index" class="navbar-brand">后台管理</a></h1>
+					<ul class="navbar-list clearfix">
+						<li>
+							<a class="on" href="/">首页</a>
+						</li>
+					</ul>
+				</div>
+				<div class="top-info-wrap">
+					<ul class="top-info-list clearfix">
+
+						<% if(name){  %>
+						<!--<h1>欢迎: <%-name %> </h1>-->
+						<button class="btn btn-danger" onclick="location.href='/relogin'">退出登录</button>
+						<!--<button class="btn btn-primary" onclick="location.href='/wenzhang'">发布文章</button>-->
+
+						<% }else{ %>
+						<button class="btn btn-success" onclick="location.href='/login'">登录</button>
+						<button class="btn btn-primary" onclick="location.href='/register'">注册</button>
+						<% } %>
+
+						<li>
+							<a href="#">修改密码</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container clearfix">
+			<div class="sidebar-wrap">
+				<div class="sidebar-title">
+					<h2>菜单</h2>
+				</div>
+				<div class="sidebar-content">
+					<ul class="sidebar-list">
+						<li>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe003;</i>常用操作</a>
+							<ul class="sub-menu">
+								<li>
+									<a id="zuopin" href="/"><i class="icon-font">&#xe008;</i>作品展示</a>
+								</li>
+
+								<li>
+									<% if(name){  %>
+									<a id="liuyan" href="/wenzhang"><i class="icon-font">&#xe004;</i>留言管理</a>
+									<% }else{ %>
+									<a id="liuyans" href="/wenzhang"><i class="icon-font">&#xe004;</i>留言展示</a>
+									<% } %>
+								</li>
+								<li>
+
+									<% if(name){  %>
+									<a id="book" href="/book"><i class="icon-font">&#xe012;</i>书籍收藏</a>
+									<% }else{ %>
+									<a id="books" href="/book"><i class="icon-font">&#xe012;</i>书籍管理</a>
+									<% } %>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe018;</i>系统管理</a>
+							<ul class="sub-menu">
+								<li>
+									<a href="/updatePwd"><i class="icon-font">&#xe017;</i>修改密码</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--/sidebar-->
+			<div class="main-wrap">
+				<div class="crumb-wrap">
+					<div class="crumb-list"><i class="icon-font">&#xe06b;</i><span>
+						<% if(name){  %>
+						欢迎 <%-name %>
+						<% } %>
+						使用『个人』后台管理系统，祝您使用愉快。
+					</span>
+					</div>
+				</div>
+				<div class="result-wrap">
+					<div class="result-content">
+						<div class="short-wrap">
+							<a href="javascript:void(0)"><i class="icon-font">&#xe001;</i>新增作品</a>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe005;</i>新增博文</a>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe048;</i>新增作品分类</a>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe041;</i>新增博客分类</a>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe01e;</i>作品评论</a>
+						</div>
+					</div>
+				</div>
+		
+		<div id="show">
+			<div class="form-group">
+				<label for="exampleInputEmail1">标题 </label>
+				<input type="text" class="form-control" id="tit">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">内容</label>
+				<textarea type="password" class="form-control" id="con"></textarea>
+			</div>
+			<button id="fabu" type="button" class="btn btn-default">发布</button>
+
+		</div>
+
+		<table class="table" id="table">
+			<tr>
+				<th>序号</th>
+				<th>标题</th>
+				<th>内容</th>
+				<% if(name){  %>
+				<th>操作</th>
+				<% } %>
+			</tr>
+
+			<%  data.map(function(item,i){  %>
+			<tr>
+				<td>
+					<%-i+1 %>
+				</td>
+				<td>
+					<a href="/detail?id=<%-item._id %>">
+						<%-item.tit %>
+					</a>
+				</td>
+				<td>
+					<%-item.con %>
+				</td>
+
+				<% if(name){  %>
+				<td id="shanchu" aid="<%-item._id %>">
+					删除
+				</td>
+				<% } %>
+
+			</tr>
+			<% }) %>
+
+		</table>
+
+		<nav aria-label="Page navigation">
+			<ul class="pagination">
+				<li>
+					<a href="/?pageNo=<%-pageNo<=1?1:parseInt(pageNo) -1 %>" aria-label="Previous">
+						<span aria-hidden="true">&laquo;上一页</span>
+					</a>
+				</li>
+
+				<% if(page>4){ %>
+				<li>
+					<a href="/?pageNo=1">1</a>
+				</li>
+				<li>
+					<a href="/?pageNo=2">2</a>
+				</li>
+				<li>
+					<a href="#">.....</a>
+				</li>
+				<li>
+					<a href="/?pageNo=<%-page-1 %>">
+						<%-page-1 %>
+					</a>
+				</li>
+				<li>
+					<a href="/?pageNo=<%-page %>">
+						<%-page %>
+					</a>
+				</li>
+				<% }else{ %>
+
+				<% for(let i=0;i<page;i++){ %>
+				<li>
+					<a href="/?pageNo=<%-i+1 %>">
+						<%-i+1 %>
+					</a>
+				</li>
+				<% } %>
+
+				<% } %>
+				<li>
+					<a href="/?pageNo=<%-pageNo>=page?page:parseInt(pageNo)+1 %>" aria-label="Next">
+						<span aria-hidden="true">&raquo;下一页</span>
+					</a>
+				</li>
+
+				<li>
+
+				</li>
+				<li>
+					<input type="text" id="yema" />
+				</li>
+				<li>
+					<button id="btn">跳转</button>
+				</li>
+			</ul>
+		</nav>
+		<!--<div><input type="text" id="yema" /> <button id="btn">跳转</button></div>-->
+
+	</body>
+	<script src="/javascripts/fwb.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$('#btn').click(function() {
+			location.href = '/?pageNo=' + $('#yema').val()
+		})
+		$("#shanchu").each(function() {
+			$(this).click(function() {
+				$(this).parent().remove()
+				var aid = $(this).attr('aid');
+				console.log(aid);
+
+				$.ajax({
+					type: "post",
+					url: "/users/deleteTravel",
+					data: {
+						id: aid
+					},
+					success: function(data) {
+						if(data == 1) {
+							alert('删除成功');
+							location.href = '/wenzhang';
+						} else {
+							alert('删除失败');
+							location.href = '/wenzhang';
+						}
+					}
+				});
+			});
+		})
+
+		$('#fabu').click(function() {
+			$.ajax({
+				type: "post",
+				url: "/users/wenzhang",
+				data: {
+					tit: $('#tit').val(),
+					con: $('#con').val()
+				},
+				success: function(data) {
+					if(data == 1) {
+						alert('发布成功')
+						location.href = '/wenzhang'
+					} else {
+						alert('发布失败')
+						location.href = '/wenzhang'
+					}
+				}
+			});
+		})
+	</script>
+
+</html>

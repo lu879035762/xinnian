@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title></title>
+		<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+		<script type="text/javascript" src="/javascripts/jquery-1.11.0.js"></script>
+		<script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="/stylesheets/wenzhang.css" />
+		<link rel="stylesheet" type="text/css" href="/stylesheets/common.css" />
+		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+	</head>
+
+	<body>
+
+		<div class="topbar-wrap white">
+			<div class="topbar-inner clearfix">
+				<div class="topbar-logo-wrap clearfix">
+					<h1 class="topbar-logo none"><a href="/index" class="navbar-brand">后台管理</a></h1>
+					<ul class="navbar-list clearfix">
+						<li>
+							<a class="on" href="/">首页</a>
+						</li>
+					</ul>
+				</div>
+				<div class="top-info-wrap">
+					<ul class="top-info-list clearfix">
+
+						<% if(name){  %>
+						<!--<h1>欢迎: <%-name %> </h1>-->
+						<button class="btn btn-danger" onclick="location.href='/relogin'">退出登录</button>
+						<!--<button class="btn btn-primary" onclick="location.href='/wenzhang'">发布文章</button>-->
+
+						<% }else{ %>
+						<button class="btn btn-success" onclick="location.href='/login'">登录</button>
+						<button class="btn btn-primary" onclick="location.href='/register'">注册</button>
+						<% } %>
+
+						<li>
+							<a href="/updatePwd">修改密码</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container clearfix">
+			<div class="sidebar-wrap">
+				<div class="sidebar-title">
+					<h2>菜单</h2>
+				</div>
+				<div class="sidebar-content">
+					<ul class="sidebar-list">
+						<li>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe003;</i>常用操作</a>
+							<ul class="sub-menu">
+								<li>
+									<a id="zuopin" href="/"><i class="icon-font">&#xe008;</i>作品展示</a>
+								</li>
+
+								<li>
+									<% if(name){  %>
+									<a id="liuyan" href="/wenzhang"><i class="icon-font">&#xe004;</i>留言管理</a>
+									<% }else{ %>
+									<a id="liuyans" href="/wenzhang"><i class="icon-font">&#xe004;</i>留言展示</a>
+									<% } %>
+								</li>
+								<li>
+
+									<% if(name){  %>
+									<a id="book" href="/book"><i class="icon-font">&#xe012;</i>书籍收藏</a>
+									<% }else{ %>
+									<a id="books" href="/book"><i class="icon-font">&#xe012;</i>书籍管理</a>
+									<% } %>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe018;</i>系统管理</a>
+							<ul class="sub-menu">
+								<li>
+									<a href="/updatePwd"><i class="icon-font">&#xe017;</i>修改密码</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--/sidebar-->
+			<div class="main-wrap">
+				<div class="crumb-wrap">
+					<div class="crumb-list"><i class="icon-font">&#xe06b;</i><span>
+						<% if(name){  %>
+						欢迎 <%-name %>
+						<% } %>
+						使用『个人』后台管理系统，祝您使用愉快。
+					</span>
+					</div>
+				</div>
+				<div class="result-wrap">
+					<div class="result-content">
+						<div class="short-wrap">
+							<a href="javascript:void(0)"><i class="icon-font">&#xe001;</i>新增作品</a>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe005;</i>新增博文</a>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe048;</i>新增作品分类</a>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe041;</i>新增博客分类</a>
+							<a href="javascript:void(0)"><i class="icon-font">&#xe01e;</i>作品评论</a>
+						</div>
+					</div>
+				</div>
+
+				<div id="show">
+					<% if(name){  %>
+					<button type="button" class="btn" data-toggle="modal" data-target=".wq-add">添加书籍</button>
+					<% } %>
+					<input type="text" id="sousuo" placeholder="书名" />
+					<button type="button" id="chazhao">查找书籍</button>
+
+					<!-- 添加书籍部分开始 -->
+					<div class="modal fade wq-add">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content" [=]>
+								<!--细节划分-->
+								<div class="form-group">
+									<input type="text" class="form-control" id="titles" placeholder="书名" value="">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="types" placeholder="类别" value="">
+								</div>
+								<div class="form-group">
+									<input type="text" id="author" class="form-control" placeholder="作者" value="">
+								</div>
+								<div class="text-center">
+									<button type="button" class="btn btn-success" data-dismiss="modal" id="savebtn">提交</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 添加书籍部分结束 -->
+
+				</div>
+				<table class="table table-hover">
+					<tr>
+						<th>序号</th>
+						<th>书名</th>
+						<th>类别</th>
+						<th>作者</th>
+						<% if(name){  %>
+						<th>操作</th>
+						<% } %>
+					</tr>
+					<%  data.map(function(item,i){  %>
+					<tr>
+						<td>
+							<%-i+1 %>
+						</td>
+						<td>
+							<a href="/detail?id=<%-item._id %>">
+								<%-item.titles %>
+							</a>
+						</td>
+						<td>
+							<%-item.types %>
+						</td>
+						<td>
+							<%-item.author %>
+						</td>
+						<% if(name){  %>
+						<td id="shanchu" aid="<%-item._id %>">
+							删除
+						</td>
+						<% } %>
+					</tr>
+					<% }) %>
+				</table>
+
+				<nav aria-label="Page navigation">
+					<ul class="pagination">
+						<li>
+							<a href="/?pageNo=<%-pageNo<=1?1:parseInt(pageNo) -1 %>" aria-label="Previous">
+								<span aria-hidden="true">&laquo;上一页</span>
+							</a>
+						</li>
+
+						<% if(page>4){ %>
+						<li>
+							<a href="/?pageNo=1">1</a>
+						</li>
+						<li>
+							<a href="/?pageNo=2">2</a>
+						</li>
+						<li>
+							<a href="#">.....</a>
+						</li>
+						<li>
+							<a href="/?pageNo=<%-page-1 %>">
+								<%-page-1 %>
+							</a>
+						</li>
+						<li>
+							<a href="/?pageNo=<%-page %>">
+								<%-page %>
+							</a>
+						</li>
+						<% }else{ %>
+
+						<% for(let i=0;i<page;i++){ %>
+						<li>
+							<a href="/?pageNo=<%-i+1 %>">
+								<%-i+1 %>
+							</a>
+						</li>
+						<% } %>
+
+						<% } %>
+						<li>
+							<a href="/?pageNo=<%-pageNo>=page?page:parseInt(pageNo)+1 %>" aria-label="Next">
+								<span aria-hidden="true">&raquo;下一页</span>
+							</a>
+						</li>
+
+						<li>
+
+						</li>
+						<li>
+							<input type="text" id="yema" />
+						</li>
+						<li>
+							<button id="btn">跳转</button>
+						</li>
+					</ul>
+				</nav>
+				<div id="zhanshi">
+					<p>×</p>
+				</div>
+
+	</body>
+	<script type="text/javascript">
+		$("#shanchu").each(function() {
+			$(this).click(function() {
+				//$(this).parent().remove()
+				var aid = $(this).attr('aid');
+				console.log(aid);
+
+				$.ajax({
+					type: "post",
+					url: "/users/deletebook",
+					data: {
+						id: aid
+					},
+					success: function(data) {
+						if(data == 1) {
+							alert('删除成功');
+							location.href = '/book';
+						} else {
+							alert('删除失败');
+							location.href = '/book';
+						}
+					}
+				});
+			});
+		})
+
+		$('#chazhao').click(function() {
+			//console.log($('#sousuo').val())
+			$.ajax({
+				type: "post",
+				url: "/users/findbook",
+				data: {
+					titles: $('#sousuo').val()
+				},
+				success: function(data) {
+					console.log(data)
+					var result = data;
+					var con = "";
+					$.each(result, function(index, item) {
+						con += "<li>数量：" + (parseInt(index) + 1) + "</li>";
+						con += "<li>书名：" + item.titles + "</li>";
+						con += "<li>类别：" + item.types + "</li>";
+						con += "<li>作者：" + item.author + "</li>";
+					});
+					console.log(con);
+					$("#zhanshi").append(con);
+					$('#zhanshi').css('display', 'block')
+				}
+			});
+			$('#zhanshi>p').click(function() {
+				$('#zhanshi').css('display', 'none');
+				location.href = '/book';
+			})
+		})
+
+		$('#savebtn').click(function() {
+			//console.log($('#titles').val(),$('#types').val(),$('#author').val())
+			$.ajax({
+				type: "post",
+				url: "/users/book",
+				data: {
+					titles: $('#titles').val(),
+					types: $('#types').val(),
+					author: $('#author').val()
+				},
+				success: function(data) {
+					if(data == 1) {
+						alert('添加书籍成功')
+						location.href = '/book'
+					} else {
+						alert('添加书籍失败')
+						location.href = '/book'
+					}
+				}
+			});
+		})
+	</script>
+
+</html>
