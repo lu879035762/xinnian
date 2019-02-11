@@ -45,21 +45,15 @@
 				</div>
 			</div>
 			<!--注册end-->
-			
-			
-			
-			
-			
-			
-			
+
 			
 		</div>
 		<div class="jianyi">*推荐使用ie8或以上版本ie浏览器或Chrome内核浏览器访问本站</div>
 		
   </body>
   <script type="text/javascript">
-  	$(function(){
-  		/*$('#register').click(function(){
+  	/*$(function(){
+  		$('#register').click(function(){
   		var password=md5($('#inputPassword3').val())
   		$.ajax({
   			type:"post",
@@ -75,9 +69,10 @@
 					location.href='/register'
 				}
   			}
-  		})
+  		});
   	})
-  		})*/
+  	})*/
+  	
   	$('#register').click(function(e){
   		e.preventDefault();
   		var password=md5($('#inputPassword3').val())
@@ -93,7 +88,7 @@
   		})
   	})
   	
-  	})
+  	
   	
   	
   	
